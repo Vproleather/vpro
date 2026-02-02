@@ -1,0 +1,300 @@
+For a homepage:
+
+
+Change the primary category, city name, target keyword, secondary category list and GBP services to mention on the homepage. Adjust the target length
+
+
+
+For a secondary category page:
+
+Remove the GBP secondary category section and only list the GBP services under this category. Adjust the target length
+
+
+
+Local Business Website Content Prompt
+
+CONTENT SPECIFICATIONS:
+
+
+
+
+
+GBP Primary Category: [Enter GBP category]
+
+
+
+City: [Enter target city]
+
+
+
+Target Keyword: [Primary service] [City] (e.g., "Plumber Houston")
+
+
+
+GBP Target Category: [Enter target category]
+
+
+
+Target length: [1,500 words]
+
+GBP Secondary Categories: [List each secondary category on separate lines]
+
+
+
+
+
+[Secondary category 1]
+
+
+
+[Secondary category 2]
+
+
+
+[Secondary category 3]
+
+
+
+[Secondary category 4]
+
+
+
+[Secondary category 5]
+
+GBP Services to Mention: [List specific services to include in content]
+
+
+
+
+
+[Service 1]
+
+
+
+[Service 2]
+
+
+
+[Service 3]
+
+
+
+[etc.]
+
+
+
+WRITING INSTRUCTIONS:
+
+You are an expert in creating content that dominates both traditional Google search rankings AND gets recommended by AI systems like ChatGPT and Google's AI overview.
+
+You understand that Google still rewards comprehensive, keyword-optimized content for map pack rankings, while AI systems look for authentic, conversational content that matches how real people communicate.
+
+Your Writing Mission: Write homepage content that ranks #1 on Google Maps while also being the type of content AI systems trust and recommend when people ask for local service suggestions.
+
+Content Assignment: Create content for a [Primary Service] company homepage targeting "[Primary Service] [City]"
+
+Optimization Guidelines:
+
+For Google Algorithm:
+
+
+
+
+
+Use target keyword in title, H1, and first paragraph
+
+
+
+Include each GBP secondary category or GBP service as exact-match H2 headings
+
+
+
+Maintain keyword density around 1-2% for primary keyword
+
+
+
+Include local SEO signals (neighborhood names, local landmarks, service areas)
+
+
+
+Use proper heading structure (H1, H2, H3) for content hierarchy
+
+
+
+Include semantic keywords related to the primary service industry
+
+For AI Systems:
+
+
+
+
+
+Sound like genuine recommendations from a trusted local expert
+
+
+
+Use natural, conversational language that matches how people actually talk
+
+
+
+Answer real questions people ask: "Who's the best [primary service] near me?" "What do I do if [common problem]?"
+
+
+
+Include authentic local knowledge and community connections
+
+
+
+Share helpful advice, not just sales pitches
+
+
+
+Use the exact words customers use when describing their problems
+
+Balanced Writing Approach:
+
+
+
+
+
+Start each section with natural, conversational language, then include technical keyword optimization
+
+
+
+Example: "Last winter, half of [local neighborhood] called us when [common problem happened]. Here's what we learned about emergency [primary service] services in [City]..."
+
+
+
+Follow storytelling with clear service descriptions that include exact keyword matches
+
+
+
+Balance helpful advice with service-focused content
+
+Content Structure:
+
+
+
+
+
+H1: Exact match primary keyword in conversational context
+
+
+
+H2s: Each GBP secondary category or GBP service as exact match, but introduced naturally
+
+
+
+Opening: Relatable local story or common problem
+
+
+
+Body: Mix of helpful advice and keyword-optimized service descriptions
+
+
+
+Service Integration: Naturally mention all listed GBP services within relevant sections
+
+
+
+Local Elements: Specific neighborhoods, seasonal issues, community involvement
+
+Language Guidelines:
+
+
+
+
+
+Write at 5th grade reading level
+
+
+
+Use short, clear sentences
+
+
+
+Balance conversational tone with keyword requirements
+
+
+
+Include both technical terms (for Google) and plain language explanations (for AI)
+
+
+
+Sound helpful and expert, not robotic or overly salesy
+
+
+
+Include lots of grammatical errors and typos
+
+Quality Signals for Both Systems:
+
+
+
+
+
+Demonstrate real local expertise and community knowledge
+
+
+
+Include specific, helpful information that solves actual problems
+
+
+
+Reference seasonal or area-specific issues related to the primary service
+
+
+
+Show genuine business history and community involvement
+
+
+
+Provide value beyond just listing services
+
+Words to Avoid: embark, look no further, navigating, picture this, top-notch, unleash, unlock, unveil, we've got you covered, transition, transitioning, crucial, delve, daunting, deep dive, dive in, realm, ensure, in conclusion, in summary, optimal, assessing, firstly, strive, striving, furthermore, moreover, comprehensive, we know, we understand, testament, captivating, eager, refreshing, edge of my seat, breath of fresh air, breath of fresh, to consider, it is important to consider, there are a few considerations, it's essential to, vital, it's important to note, it should be noted, to sum up, secondly, lastly, in terms of, with regard to, it's worth mentioning, it's interesting to note, significantly, notably, essentially, as such, therefore, thus, interestingly, in essence, noteworthy, bear in mind, it's crucial to note, one might argue, it's widely acknowledged, predominantly, from this perspective, in this context, this demonstrates, arguably, it's common knowledge, undoubtedly, this raises the question, in a nutshell, unveiled
+
+Success Metric: Content should feel natural enough that AI systems recommend it, while being optimized enough that Google ranks it in the top 3 map results.
+
+
+
+
+
+Single Prompt Topical Map:
+
+You are an SEO and language expert with a history in understanding how Google’s algorithm interprets language. I want to improve my website’s tropical relevance within the seo niche. My goal is to create content that aligns closely with topics Google’s algorithm considers semantically related, thereby improving my site’s visibility and authority. To achieve this, I need your help with the following tasks:
+
+
+
+
+
+Generate a list of topics: Please create a list of 25 topics related to “seo.” These topics should be carefully chosen to ensure they are viewed as closely related by Google’s algorithm, improving the topical relevance of my website for “seo.” Consider emerging trends, foundational principles, and specialized areas.
+
+
+
+Evaluate the main category: Based on your understanding of current SEO trends and Google’s algorithm preference, suggest any modifications to the main category of “seo” if you see a more focused or altered categorization could better serve my goal of increasing topical relevance and search visibility
+
+
+
+Clarifying questions: Should you need further clarification on the scope of this category or if specific aspects of my request are unclear, please list any questions that would help you better tailor your response to my needs. This could include seeking more information about my target audience, the current content mix on my website, or particular areas of this topic I wish to emphasize.
+
+The ultimate aim is to identify a cohesive set of topics that will guide our content create efforts, making the website a comprehensive resource that is highly regarded by both users and Google’s search algorithm.
+
+ Then I need specific target keywords for articles to write. With that in mind, please generate:
+
+
+
+
+
+15 keyword variations on each of the themes identified above each tailored to different facets of user search intent. These variations should explore different aspects, challenges, and interests within the field of graphic design, catering to a wide audience range from beginners to professionals.
+
+
+
+For each keyword variation, please suggest an SEO-optimized title tag designed to maximize click-through rates. The title should be compelling, incorporating the keyword effectively while enticing the potential reader with the promise of valuable insights or solutions.
+
+
+
+Additionally, provide three article heading suggestions for each keyword. These headings should outline a clear, structured approach to the topic, aiming to cover various angles that address specific questions, problems, or interests related to the main keyword. The goal is to create content that is both informative and engaging, encouraging deeper exploration and interaction.
+
+This content strategy aims not only to improve the site’s ranking for a broad spectrum of related searches but also to establish the site as a comprehensive resource in the seo domain. Any suggestions for improving the main category or additional questions to better understand this request are welcome.
+
+ Create this in html. Make sure that the values calculate based on the formulas in the excel table. Please make it look nice and well formatted. It doesn’t need to match the organization of the excel sheet exactly, as long as it has the same functionality. Use colors that are appropriate for the user to know how to use the tool. Make it as easy as possible and as aesthetically attractive as possible.
