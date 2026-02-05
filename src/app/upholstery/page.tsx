@@ -6,7 +6,7 @@ import CTASection from "@/components/CTASection";
 import Testimonials from "@/components/Testimonials";
 
 export const metadata: Metadata = {
-  title: "Upholstery Shop Woodstock GA | Commercial & Residential Upholstery",
+  title: "Upholstery Shop Woodstock GA | Custom Upholstery",
   description: "Professional upholstery services in Woodstock, GA. Restaurant booths, medical seating, marine upholstery and more. Serving Cherokee County businesses.",
 };
 

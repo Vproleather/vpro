@@ -6,7 +6,7 @@ import CTASection from "@/components/CTASection";
 import Testimonials from "@/components/Testimonials";
 
 export const metadata: Metadata = {
-  title: "Leather Repair Woodstock GA | Expert Leather Restoration Services",
+  title: "Leather Repair Woodstock GA | Expert Restoration",
   description: "Professional leather repair services in Woodstock, GA. Sofa repair, car seat repair, color restoration, cleaning and more. Serving Cherokee County since 2005.",
 };
 

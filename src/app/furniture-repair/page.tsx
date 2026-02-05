@@ -6,7 +6,7 @@ import CTASection from "@/components/CTASection";
 import Testimonials from "@/components/Testimonials";
 
 export const metadata: Metadata = {
-  title: "Furniture Repair Shop Woodstock GA | Expert Furniture Restoration",
+  title: "Furniture Repair Shop Woodstock GA | Restoration",
   description: "Professional furniture repair and restoration in Woodstock, GA. Regluing, recliner repair, water damage restoration. Serving Cherokee County.",
 };
 

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Aircraft Seat Repair Woodstock GA | Aviation Leather Restoration",
+  title: "Aircraft Seat Repair Woodstock GA | Aviation",
   description: "Specialized aircraft seat repair in Woodstock, GA. Private planes, corporate jets. Expert leather restoration for aviation interiors.",
 };
 

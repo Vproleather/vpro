@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Hospitality Upholstery Woodstock GA | Hotel Furniture Services",
+  title: "Hospitality Upholstery Woodstock GA | Hotels",
   description: "Hospitality upholstery services in Woodstock, GA. Hotels, resorts, event venues. Large-scale capabilities, quality guaranteed.",
 };
 

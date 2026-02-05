@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Leather Sofa Repair Woodstock GA | Professional Couch Restoration",
+  title: "Leather Sofa Repair Woodstock GA | Couch Repair",
   description: "Expert leather sofa repair in Woodstock, GA. Fix tears, scratches, fading, and wear. Restore your leather couch to like-new condition. Free quotes.",
 };
 

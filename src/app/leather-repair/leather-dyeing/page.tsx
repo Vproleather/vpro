@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Leather Dyeing Woodstock GA | Professional Leather Color Change",
+  title: "Leather Dyeing Woodstock GA | Color Change Service",
   description: "Professional leather dyeing services in Woodstock, GA. Change colors, restore faded leather, custom color matching. Furniture and auto.",
 };
 

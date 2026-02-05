@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "About V-Pro Leather Repair | Woodstock GA Leather Restoration",
+  title: "About V-Pro Leather Repair | Woodstock GA",
   description: "Meet the team at V-Pro Leather Repair. Locally owned leather and upholstery repair serving Woodstock and surrounding areas. Licensed, insured, and committed to quality service.",
 };
 

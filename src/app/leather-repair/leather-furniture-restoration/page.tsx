@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Leather Furniture Restoration Woodstock GA | Complete Restoration",
+  title: "Leather Furniture Restoration Woodstock GA",
   description: "Complete leather furniture restoration in Woodstock, GA. Restore chairs, ottomans, recliners, and more. Expert craftsmanship, guaranteed results.",
 };
 

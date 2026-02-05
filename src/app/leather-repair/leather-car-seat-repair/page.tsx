@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Leather Car Seat Repair Woodstock GA | Auto Interior Restoration",
+  title: "Leather Car Seat Repair Woodstock GA | Auto Leather",
   description: "Professional leather car seat repair in Woodstock, GA. Fix cracks, tears, fading, and wear. All makes and models. Expert results from certified technicians.",
 };
 
