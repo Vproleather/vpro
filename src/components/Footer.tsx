@@ -162,15 +162,9 @@ export default function Footer() {
             <Link href="/about" className="text-white/40 hover:text-[#C9A327] transition-colors text-sm">
               About Us
             </Link>
-            <Link href="/privacy" className="text-white/40 hover:text-[#C9A327] transition-colors text-sm">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="text-white/40 hover:text-[#C9A327] transition-colors text-sm">
-              Terms of Service
-            </Link>
-            <Link href="/sitemap" className="text-white/40 hover:text-[#C9A327] transition-colors text-sm">
+            <a href="/sitemap.xml" className="text-white/40 hover:text-[#C9A327] transition-colors text-sm">
               Sitemap
-            </Link>
+            </a>
           </div>
         </div>
       </div>
