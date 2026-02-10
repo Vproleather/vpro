@@ -47,7 +47,7 @@ export default function Footer() {
             </Link>
             <p className="text-white/60 mb-6 max-w-sm">
               Premier leather repair and restoration services in Woodstock, Georgia. 
-              Expert craftsmen serving Cherokee County and the greater Atlanta area since 2005.
+              Expert craftsmen serving Cherokee County and the greater Atlanta area since 2000.
             </p>
             <div className="space-y-2 text-white/60">
               <p className="flex items-center gap-2">
