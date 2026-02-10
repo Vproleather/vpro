@@ -125,10 +125,10 @@ export default function AboutPage() {
                 <div className="md:col-span-1">
                   <div className="aspect-square rounded-2xl overflow-hidden relative">
                     <Image
-                      src="/img/brad.webp"
+                      src="/img/brad.jpg"
                       alt="Brad Koplen, Owner of V-Pro Leather Repair"
                       fill
-                      className="object-cover"
+                      className="object-cover object-top"
                     />
                   </div>
                 </div>
