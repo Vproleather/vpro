@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 
 const serviceAreas = [
@@ -17,20 +17,70 @@ export default function ContactPage() {
     service: "",
     message: "",
   });
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      setErrorMessage("Image must be under 10MB.");
+      return;
+    }
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"];
+    if (!allowedTypes.includes(file.type)) {
+      setErrorMessage("Only JPEG, PNG, WebP, and HEIC images are accepted.");
+      return;
+    }
+
+    setErrorMessage("");
+    setImage(file);
+    const reader = new FileReader();
+    reader.onload = (ev) => setImagePreview(ev.target?.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const removeImage = () => {
+    setImage(null);
+    setImagePreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Connect to your form handler: Formspree, Netlify Forms, or your CRM
-    // For now, simulate a successful submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+    setErrorMessage("");
+
+    try {
+      const body = new FormData();
+      body.append("name", formData.name);
+      body.append("email", formData.email);
+      body.append("phone", formData.phone);
+      body.append("service", formData.service);
+      body.append("message", formData.message);
+      if (image) body.append("image", image);
+
+      const res = await fetch("/api/contact", { method: "POST", body });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      setIsSubmitted(true);
+      setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+      removeImage();
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : "Failed to send. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -46,7 +96,7 @@ export default function ContactPage() {
               "@type": "LocalBusiness",
               "name": "V-Pro Leather Repair",
               "telephone": "(770) 592-4689",
-              "email": "info@vproleather.com",
+              "email": "vpro@bellsouth.net",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "298 N Briar Ridge",
@@ -149,10 +199,10 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-black text-lg mb-1">Email Us</h3>
                     <a 
-                      href="mailto:info@vproleather.com" 
+                      href="mailto:vpro@bellsouth.net" 
                       className="text-lg text-[#C9A327] hover:underline"
                     >
-                      info@vproleather.com
+                      vpro@bellsouth.net
                     </a>
                     <p className="text-gray-500 text-sm mt-1">We respond within 24 hours</p>
                   </div>
@@ -343,6 +393,61 @@ export default function ContactPage() {
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     />
                   </div>
+                  
+                  {/* Image Upload */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Attach a Photo <span className="text-gray-400">(optional)</span>
+                    </label>
+                    <p className="text-xs text-gray-500 mb-3">
+                      A photo helps us give you a more accurate estimate. JPEG, PNG, WebP or HEIC up to 10MB.
+                    </p>
+
+                    {imagePreview ? (
+                      <div className="relative inline-block">
+                        <img
+                          src={imagePreview}
+                          alt="Upload preview"
+                          className="w-40 h-40 object-cover rounded-lg border border-gray-200"
+                        />
+                        <button
+                          type="button"
+                          onClick={removeImage}
+                          className="absolute -top-2 -right-2 w-7 h-7 bg-black text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+                          aria-label="Remove image"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                    ) : (
+                      <label
+                        htmlFor="image"
+                        className="flex flex-col items-center justify-center w-full h-36 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#C9A327] hover:bg-[#fdfbf0] transition-all"
+                      >
+                        <svg className="w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span className="text-sm text-gray-500">Click to upload a photo</span>
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          id="image"
+                          accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+                          className="hidden"
+                          onChange={handleImageChange}
+                        />
+                      </label>
+                    )}
+                  </div>
+
+                  {/* Error message */}
+                  {errorMessage && (
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-red-700 text-sm">{errorMessage}</p>
+                    </div>
+                  )}
                   
                   <button
                     type="submit"

@@ -10,7 +10,7 @@ export const localBusinessSchema = {
   "description": "Professional leather repair, furniture restoration, and upholstery services in Woodstock, GA. Serving Cherokee County and North Atlanta since 2005.",
   "url": "https://vproleather.com",
   "telephone": "(770) 592-4689",
-  "email": "info@vproleather.com",
+  "email": "vpro@bellsouth.net",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "298 N Briar Ridge",

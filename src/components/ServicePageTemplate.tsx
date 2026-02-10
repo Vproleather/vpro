@@ -111,11 +111,11 @@ export default function ServicePageTemplate({
                     </svg>
                     (770) 592-4689
                   </a>
-                  <a href="mailto:info@vproleather.com" className="flex items-center gap-3 text-white/70 hover:text-[#C9A327] transition-colors">
+                  <a href="mailto:vpro@bellsouth.net" className="flex items-center gap-3 text-white/70 hover:text-[#C9A327] transition-colors">
                     <svg className="w-5 h-5 text-[#C9A327]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    info@vproleather.com
+                    vpro@bellsouth.net
                   </a>
                 </div>
                 <Link
