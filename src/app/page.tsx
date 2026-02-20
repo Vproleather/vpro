@@ -36,7 +36,7 @@ export default function Home() {
       {/* Hero Section */}
       <Hero
         subtitle="Woodstock's Premier Leather Experts"
-        title="Leather Repair Woodstock"
+        title="Award Winning Leather Repair in Woodstock, GA"
         description="From your favorite recliner to your Mercedes interior, we restore leather to its original beauty. Serving Woodstock, Cherokee County, and North Atlanta since 2005."
         ctaText="Get Free Quote"
         ctaHref="/contact"

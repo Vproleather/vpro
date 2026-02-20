@@ -300,6 +300,84 @@ export default function LeatherRepairPage() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="Common Questions"
+            title="Leather Repair Questions from Woodstock Homeowners"
+            description="Answers to the questions we hear most from Cherokee County residents about leather repair."
+          />
+
+          <div className="max-w-4xl mx-auto space-y-12">
+            {/* FAQ 1 */}
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-black mb-4">
+                How Do You Properly Repair Leather in Woodstock, GA?
+              </h2>
+              <p className="text-gray-600 text-lg mb-4">
+                Proper leather repair in Woodstock starts with a thorough cleaning and assessment of the damage. A professional technician will match your leather's exact color using a spectrophotometer, apply a sub-patch for structural support if needed, then use professional-grade fillers and dyes that bond permanently to the hide. The repair is finished with a topcoat matched to the original sheen so the result is virtually invisible.
+              </p>
+              <Link href="/leather-repair/how-to-properly-repair-leather-woodstock" className="inline-flex items-center text-[#C9A327] font-semibold hover:underline">
+                Read our full guide to proper leather repair in Woodstock →
+              </Link>
+            </div>
+
+            {/* FAQ 2 */}
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-black mb-4">
+                Is Professional Leather Repair in Woodstock Actually Worth It?
+              </h2>
+              <p className="text-gray-600 text-lg mb-4">
+                Professional leather repair in Woodstock is almost always worth the investment. A quality repair typically costs 50–80% less than replacing the furniture or car seat, and the results last for years when done by a certified technician. You also keep the piece you already love — which is especially important for high-quality furniture built with solid hardwood frames and premium hides that modern replacements rarely match.
+              </p>
+              <Link href="/leather-repair/is-professional-leather-repair-worth-it-woodstock" className="inline-flex items-center text-[#C9A327] font-semibold hover:underline">
+                Learn why professional leather repair pays for itself →
+              </Link>
+            </div>
+
+            {/* FAQ 3 */}
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-black mb-4">
+                Do Store-Bought Leather Repair Kits Really Work — or Should You Hire a Pro in Woodstock?
+              </h2>
+              <p className="text-gray-600 text-lg mb-4">
+                Store-bought leather repair kits can handle very minor surface scuffs, but they consistently fall short on tears, deep scratches, and color-matched results. The generic dyes rarely match your leather's exact shade, and the adhesives in consumer kits break down within weeks — especially in Georgia's heat and humidity. For anything beyond a light surface mark, hiring a professional in Woodstock delivers dramatically better, longer-lasting results.
+              </p>
+              <Link href="/leather-repair/leather-repair-kits-vs-professional-woodstock" className="inline-flex items-center text-[#C9A327] font-semibold hover:underline">
+                See the full comparison: DIY kits vs. professional leather repair →
+              </Link>
+            </div>
+
+            {/* FAQ 4 */}
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-black mb-4">
+                How Much Does Leather Repair Typically Cost in Woodstock, GA?
+              </h2>
+              <p className="text-gray-600 text-lg mb-4">
+                Leather repair in Woodstock generally ranges from $150 for small scratch or scuff repairs to $500+ for large tear repairs or full color restoration on a sofa. Car seat repairs typically fall between $150 and $350 per panel. The exact cost depends on the type of leather, the extent of the damage, and whether color matching or structural repair is needed. We provide free estimates so you know the price before any work begins.
+              </p>
+              <Link href="/leather-repair/leather-repair-cost-woodstock" className="inline-flex items-center text-[#C9A327] font-semibold hover:underline">
+                Get the full breakdown of leather repair pricing in Woodstock →
+              </Link>
+            </div>
+
+            {/* FAQ 5 */}
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-black mb-4">
+                What Causes Leather to Split and How Do You Fix It in Woodstock?
+              </h2>
+              <p className="text-gray-600 text-lg mb-4">
+                Leather splits when it dries out from lack of conditioning, excessive heat, UV exposure, or Georgia's dramatic humidity swings between summer and winter. The fibers lose flexibility and crack under everyday stress. A professional repair involves cleaning the area, applying a flexible sub-patch behind the split, filling with leather-specific compound, then color-matching and finishing with a protective topcoat that restores both the look and the flexibility of the original hide.
+              </p>
+              <Link href="/leather-repair/leather-splitting-causes-and-repair-woodstock" className="inline-flex items-center text-[#C9A327] font-semibold hover:underline">
+                Read the complete guide to leather splitting and repair →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <Testimonials />
 
