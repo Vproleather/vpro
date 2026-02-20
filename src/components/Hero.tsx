@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 interface HeroProps {
   title: string;
@@ -8,6 +9,10 @@ interface HeroProps {
   ctaHref?: string;
   secondaryCtaText?: string;
   secondaryCtaHref?: string;
+  backgroundImage?: {
+    src: string;
+    alt: string;
+  };
 }
 
 export default function Hero({
@@ -18,6 +23,7 @@ export default function Hero({
   ctaHref = "/contact",
   secondaryCtaText,
   secondaryCtaHref,
+  backgroundImage,
 }: HeroProps) {
   return (
     <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden">
@@ -28,8 +34,20 @@ export default function Hero({
         }} />
       </div>
 
+      {/* Background Image */}
+      {backgroundImage && (
+        <Image
+          src={backgroundImage.src}
+          alt={backgroundImage.alt}
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+      )}
+
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-black/95 to-black/90" />
+      <div className={backgroundImage ? "absolute inset-0 bg-gradient-to-br from-black/90 via-black/85 to-black/80" : "absolute inset-0 bg-gradient-to-br from-black via-black/95 to-black/90"} />
 
       {/* Accent Glow */}
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#C9A327]/10 rounded-full blur-3xl" />

@@ -42,6 +42,10 @@ export default function Home() {
         ctaHref="/contact"
         secondaryCtaText="Our Services"
         secondaryCtaHref="#services"
+        backgroundImage={{
+          src: "/img/vprohero.webp",
+          alt: "V-Pro Leather professional leather repair workshop in Woodstock GA",
+        }}
       />
 
       {/* Intro Section */}
