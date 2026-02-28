@@ -59,6 +59,10 @@ export default function Hero({
             {subtitle}
           </p>
         )}
+
+        <p className="text-white/80 font-semibold tracking-[0.25em] uppercase text-base md:text-lg mb-8">
+          Upholstery <span className="mx-2 text-[#C9A327]">•</span> Repair <span className="mx-2 text-[#C9A327]">•</span> Restoration
+        </p>
         
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tight">
           {title.split(" ").map((word, i) => (
