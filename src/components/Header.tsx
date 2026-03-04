@@ -53,6 +53,17 @@ const navigation = [
       { name: "Moving Damage Repair", href: "/furniture-repair/moving-damage-furniture-repair" },
     ],
   },
+  {
+    name: "Areas We Serve",
+    href: "/locations",
+    children: [
+      { name: "Holly Springs Town Center", href: "/locations/holly-springs-town-center" },
+      { name: "Kennesaw Mountain", href: "/locations/kennesaw-mountain" },
+      { name: "Gibbs Gardens, Ball Ground", href: "/locations/gibbs-gardens" },
+      { name: "Town Center at Cobb", href: "/locations/town-center-at-cobb" },
+      { name: "Kennesaw State University", href: "/locations/kennesaw-state-university" },
+    ],
+  },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
