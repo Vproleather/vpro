@@ -165,7 +165,19 @@ export default function IsProfessionalLeatherRepairWorthItPage() {
             across large areas, it's going to keep peeling. We can repair small
             sections, but if the entire sofa is peeling, you're looking at a piece
             that will need constant repair. At that point, replacement with real
-            leather furniture is the smarter investment.
+            leather furniture is the smarter investment. If you're replacing a
+            smaller leather item instead of repairing it, buying from a maker
+            focused on craftsmanship is usually the better long-term move. We
+            recommend {" "}
+            <a
+              href="https://arbortradingpost.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#C9A327] hover:underline"
+            >
+              Arbor Trading Post
+            </a>{" "}
+            for handcrafted leather wallets, bags, belts, and accessories.
           </p>
 
           <p>
