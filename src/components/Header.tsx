@@ -71,8 +71,16 @@ const navigation = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [expandedMobileCategories, setExpandedMobileCategories] = useState<string[]>([]);
+
+  const toggleMobileCategory = (name: string) => {
+    setExpandedMobileCategories((prev) =>
+      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name]
+    );
+  };
 
   return (
+    <>
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
       <nav className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -151,44 +159,6 @@ export default function Header() {
             </svg>
           </button>
         </div>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-white/10">
-            {navigation.map((item) => (
-              <div key={item.name}>
-                <Link
-                  href={item.href}
-                  className="block py-3 text-white/80 hover:text-[#C9A327] transition-colors font-medium"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-                {item.children && (
-                  <div className="pl-4 pb-2">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.name}
-                        href={child.href}
-                        className="block py-2 text-sm text-white/60 hover:text-[#C9A327] transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {child.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            <Link
-              href="/contact"
-              className="inline-flex items-center mt-4 px-6 py-3 bg-[#C9A327] text-black font-semibold text-sm rounded-full"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Get Free Quote
-            </Link>
-          </div>
-        )}
       </nav>
 
       {/* Mobile Service Banner */}
@@ -202,5 +172,96 @@ export default function Header() {
         </span>
       </div>
     </header>
+
+    {/* Mobile Menu - outside header to avoid backdrop-blur containing block */}
+    {mobileMenuOpen && (
+      <div className="lg:hidden fixed inset-0 top-0 z-[60] flex flex-col bg-[#1a1a1a]">
+        {/* Menu header with close button */}
+        <div className="flex items-center justify-between h-20 px-6 border-b border-white/10 shrink-0">
+          <Link href="/" className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
+            <Image
+              src="/V-pro.png"
+              alt="V-Pro Leather Repair Logo"
+              width={180}
+              height={60}
+              className="h-14 w-auto"
+            />
+          </Link>
+          <button
+            className="p-2 text-white"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Scrollable menu content */}
+        <div className="flex-1 overflow-y-auto px-6 py-4">
+          {navigation.map((item) => (
+            <div key={item.name}>
+              {item.children ? (
+                <>
+                  <button
+                    className="flex items-center justify-between w-full py-3 text-white/80 hover:text-[#C9A327] transition-colors font-medium text-lg"
+                    onClick={() => toggleMobileCategory(item.name)}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="hover:text-[#C9A327]"
+                    >
+                      {item.name}
+                    </Link>
+                    <svg
+                      className={`w-5 h-5 transition-transform ${expandedMobileCategories.includes(item.name) ? "rotate-180" : ""}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {expandedMobileCategories.includes(item.name) && (
+                    <div className="pl-4 pb-2">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.name}
+                          href={child.href}
+                          className="block py-2 text-sm text-white/60 hover:text-[#C9A327] transition-colors"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link
+                  href={item.href}
+                  className="block py-3 text-white/80 hover:text-[#C9A327] transition-colors font-medium text-lg"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              )}
+            </div>
+          ))}
+          <Link
+            href="/contact"
+            className="inline-flex items-center mt-6 px-6 py-3 bg-[#C9A327] text-black font-semibold text-sm rounded-full"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Get Free Quote
+          </Link>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
