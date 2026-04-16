@@ -13,13 +13,6 @@ const serviceAreas = [
   "Towne Lake", "Eagle Watch", "BridgeMill", "Lake Allatoona"
 ];
 
-const trustSignals = [
-  { icon: "shield", title: "Licensed & Insured", desc: "Fully licensed and insured for your protection" },
-  { icon: "star", title: "20+ Years Experience", desc: "Serving Cherokee County since 2005" },
-  { icon: "check", title: "Satisfaction Guaranteed", desc: "100% satisfaction on every job" },
-  { icon: "clock", title: "Same-Day Estimates", desc: "Fast, free quotes for all projects" },
-];
-
 export default function AboutPage() {
   return (
     <>
@@ -68,10 +61,10 @@ export default function AboutPage() {
                   V-Pro Leather Repair was born from a simple idea: people in Woodstock and Cherokee County deserve access to quality leather repair without having to drive to Atlanta. What started as a small operation has grown into one of the most trusted leather and upholstery repair services in North Georgia.
                 </p>
                 <p className="mb-6">
-                  We've seen this community grow and change over the years. From the historic downtown area to the new neighborhoods around Towne Lake and BridgeMill, we've had the privilege of serving families throughout Cherokee County. Many of our customers have been with us for years, and we often work on multiple pieces for the same families as their needs change.
+                  We&apos;ve seen this community grow and change over the years. From the historic downtown area to the new neighborhoods around Towne Lake and BridgeMill, we&apos;ve had the privilege of serving families throughout Cherokee County. Many of our customers have been with us for years, and we often work on multiple pieces for the same families as their needs change.
                 </p>
                 <p>
-                  Our shop is right here in Woodstock because this is home. We're not a franchise or a national chain. We're your neighbors, and we take pride in the work we do for our community.
+                  Our shop is right here in Woodstock because this is home. We&apos;re not a franchise or a national chain. We&apos;re your neighbors, and we take pride in the work we do for our community.
                 </p>
               </div>
             </div>
@@ -154,6 +147,49 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Community Fundraiser Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-[0.95fr_1.05fr] gap-16 items-center">
+            <div>
+              <p className="text-[#C9A327] font-medium tracking-widest uppercase text-sm mb-4">
+                Community Involvement
+              </p>
+              <h2 className="text-4xl md:text-5xl font-bold text-black tracking-tight mb-6">
+                Proud Sponsor of the ARM of Care Golf Fundraiser
+              </h2>
+              <div className="prose prose-lg text-gray-600">
+                <p className="mb-6">
+                  V-Pro was proud to support ARM of Care&apos;s golf fundraiser, joining local sponsors, auction donors, and families for a day on the course that helped bring the community together.
+                </p>
+                <p className="mb-8">
+                  For Brad and the V-Pro team, giving back locally is part of the same commitment that guides our repair work: show up, do the job with care, and invest in the people around us.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4 items-start">
+              <Image
+                src="/img/brad-arm-of-care-golf-fundraiser.webp"
+                alt="Brad Koplen at the ARM of Care golf fundraiser with the V-Pro sponsor sign"
+                width={1600}
+                height={2147}
+                sizes="(min-width: 1024px) 24vw, (min-width: 640px) 50vw, 100vw"
+                className="w-full h-auto rounded-2xl border border-gray-100 bg-gray-100"
+              />
+              <Image
+                src="/img/arm-of-care-golf-fundraiser-sponsors.webp"
+                alt="ARM of Care golf fundraiser sponsor and donor banners including V-Pro"
+                width={1800}
+                height={2400}
+                sizes="(min-width: 1024px) 24vw, (min-width: 640px) 50vw, 100vw"
+                className="w-full h-auto rounded-2xl border border-gray-100 bg-gray-100"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Service Area Section */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -166,7 +202,7 @@ export default function AboutPage() {
                 Proudly Serving Woodstock and Surrounding Areas
               </h2>
               <p className="text-gray-600 text-lg mb-6">
-                Our shop is located right here in Woodstock, and we serve customers throughout Cherokee County and beyond. Whether you're in downtown Woodstock, out by Lake Allatoona, or anywhere in between, we're here to help.
+                Our shop is located right here in Woodstock, and we serve customers throughout Cherokee County and beyond. Whether you&apos;re in downtown Woodstock, out by Lake Allatoona, or anywhere in between, we&apos;re here to help.
               </p>
               <p className="text-gray-600 text-lg mb-8">
                 For most projects, we offer mobile service and can come to you. Large items like sofas and sectionals are often easier for us to work on in your home. Just give us a call to discuss your specific needs.
@@ -207,7 +243,7 @@ export default function AboutPage() {
                 ))}
               </div>
               <p className="text-gray-500 text-sm">
-                Not sure if we serve your area? Give us a call at (770) 592-4689 and we'll let you know.
+                Not sure if we serve your area? Give us a call at (770) 592-4689 and we&apos;ll let you know.
               </p>
             </div>
           </div>
