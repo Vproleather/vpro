@@ -1,13 +1,120 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Link from "next/link";
 
 const serviceAreas = [
   "Woodstock", "Canton", "Roswell", "Alpharetta", "Marietta", 
   "Kennesaw", "Acworth", "Holly Springs", "Ball Ground", "Cumming",
   "Towne Lake", "Eagle Watch", "BridgeMill", "Lake Allatoona"
 ];
+
+const MAX_TOTAL_IMAGE_UPLOAD_BYTES = Math.floor(3.5 * 1024 * 1024);
+const MAX_SOURCE_IMAGE_BYTES = 20 * 1024 * 1024;
+const MAX_IMAGE_COUNT = 5;
+const MAX_IMAGE_DIMENSION = 1600;
+const IMAGE_UPLOAD_LIMIT_LABEL = "3.5MB";
+const SOURCE_IMAGE_LIMIT_LABEL = "20MB";
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/heic",
+  "image/heif",
+];
+
+function getCompressedFileName(fileName: string) {
+  const baseName = fileName.replace(/\.[^/.]+$/, "") || "photo";
+  return `${baseName}.jpg`;
+}
+
+function loadImage(file: File) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const image = new Image();
+
+    image.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(image);
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Could not read image."));
+    };
+    image.src = url;
+  });
+}
+
+function canvasToBlob(canvas: HTMLCanvasElement, quality: number) {
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error("Could not compress image."));
+        }
+      },
+      "image/jpeg",
+      quality
+    );
+  });
+}
+
+async function readImagePreview(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = (ev) => resolve(ev.target?.result as string);
+    reader.onerror = () => reject(new Error("Could not preview image."));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function prepareImageForUpload(file: File, maxBytes: number) {
+  if (file.size <= maxBytes) {
+    return file;
+  }
+
+  const image = await loadImage(file);
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    throw new Error("Image compression is not available in this browser.");
+  }
+
+  const initialScale = Math.min(
+    1,
+    MAX_IMAGE_DIMENSION / Math.max(image.width, image.height)
+  );
+  let width = Math.max(1, Math.round(image.width * initialScale));
+  let height = Math.max(1, Math.round(image.height * initialScale));
+  let quality = 0.82;
+
+  for (let attempt = 0; attempt < 7; attempt += 1) {
+    canvas.width = width;
+    canvas.height = height;
+    context.drawImage(image, 0, 0, width, height);
+
+    const blob = await canvasToBlob(canvas, quality);
+    if (blob.size <= maxBytes) {
+      return new File([blob], getCompressedFileName(file.name), {
+        type: "image/jpeg",
+        lastModified: Date.now(),
+      });
+    }
+
+    const shrinkRatio = Math.min(
+      0.9,
+      Math.sqrt(maxBytes / blob.size) * 0.95
+    );
+    width = Math.max(1, Math.round(width * shrinkRatio));
+    height = Math.max(1, Math.round(height * shrinkRatio));
+    quality = Math.max(0.6, quality - 0.08);
+  }
+
+  throw new Error("Image is too large to upload.");
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -17,38 +124,94 @@ export default function ContactPage() {
     service: "",
     message: "",
   });
-  const [image, setImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [images, setImages] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(e.target.files ?? []);
+    if (selectedFiles.length === 0) return;
 
-    if (file.size > 10 * 1024 * 1024) {
-      setErrorMessage("Image must be under 10MB.");
+    const nextImageCount = images.length + selectedFiles.length;
+    if (nextImageCount > MAX_IMAGE_COUNT) {
+      setErrorMessage(`You can attach up to ${MAX_IMAGE_COUNT} photos.`);
+      e.currentTarget.value = "";
       return;
     }
 
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"];
-    if (!allowedTypes.includes(file.type)) {
-      setErrorMessage("Only JPEG, PNG, WebP, and HEIC images are accepted.");
-      return;
+    for (const file of selectedFiles) {
+      if (file.size > MAX_SOURCE_IMAGE_BYTES) {
+        setErrorMessage(`Each image must be under ${SOURCE_IMAGE_LIMIT_LABEL}.`);
+        e.currentTarget.value = "";
+        return;
+      }
+
+      if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        setErrorMessage("Only JPEG, PNG, WebP, and HEIC images are accepted.");
+        e.currentTarget.value = "";
+        return;
+      }
     }
 
     setErrorMessage("");
-    setImage(file);
-    const reader = new FileReader();
-    reader.onload = (ev) => setImagePreview(ev.target?.result as string);
-    reader.readAsDataURL(file);
+    try {
+      const existingUploadBytes = images.reduce(
+        (total, image) => total + image.size,
+        0
+      );
+      const remainingUploadBytes = MAX_TOTAL_IMAGE_UPLOAD_BYTES - existingUploadBytes;
+      if (remainingUploadBytes <= 0) {
+        throw new Error("Photos are too large to upload.");
+      }
+
+      const maxBytesPerImage = Math.floor(
+        remainingUploadBytes / selectedFiles.length
+      );
+      const uploadableImages = await Promise.all(
+        selectedFiles.map((file) => prepareImageForUpload(file, maxBytesPerImage))
+      );
+      const totalUploadBytes = uploadableImages.reduce(
+        (total, file) => total + file.size,
+        existingUploadBytes
+      );
+
+      if (totalUploadBytes > MAX_TOTAL_IMAGE_UPLOAD_BYTES) {
+        throw new Error("Images are too large to upload.");
+      }
+
+      const uploadableImagePreviews = await Promise.all(
+        uploadableImages.map(readImagePreview)
+      );
+
+      setImages((currentImages) => [...currentImages, ...uploadableImages]);
+      setImagePreviews((currentPreviews) => [
+        ...currentPreviews,
+        ...uploadableImagePreviews,
+      ]);
+    } catch {
+      setErrorMessage(
+        `Photos must be under ${IMAGE_UPLOAD_LIMIT_LABEL} total. Please choose smaller photos.`
+      );
+      e.currentTarget.value = "";
+    }
   };
 
-  const removeImage = () => {
-    setImage(null);
-    setImagePreview(null);
+  const removeImage = (index: number) => {
+    setImages((currentImages) =>
+      currentImages.filter((_, imageIndex) => imageIndex !== index)
+    );
+    setImagePreviews((currentPreviews) =>
+      currentPreviews.filter((_, imageIndex) => imageIndex !== index)
+    );
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const removeImages = () => {
+    setImages([]);
+    setImagePreviews([]);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -64,7 +227,7 @@ export default function ContactPage() {
       body.append("phone", formData.phone);
       body.append("service", formData.service);
       body.append("message", formData.message);
-      if (image) body.append("image", image);
+      images.forEach((image) => body.append("images", image));
 
       const res = await fetch("/api/contact", { method: "POST", body });
       const data = await res.json();
@@ -75,7 +238,7 @@ export default function ContactPage() {
 
       setIsSubmitted(true);
       setFormData({ name: "", email: "", phone: "", service: "", message: "" });
-      removeImage();
+      removeImages();
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : "Failed to send. Please try again.");
     } finally {
@@ -272,7 +435,7 @@ export default function ContactPage() {
                   </div>
                   <h3 className="text-xl font-bold text-green-800 mb-2">Message Sent!</h3>
                   <p className="text-green-700 mb-4">
-                    Thank you for reaching out. We'll get back to you within 24 hours.
+                    Thank you for reaching out. We&apos;ll get back to you within 24 hours.
                   </p>
                   <button
                     onClick={() => setIsSubmitted(false)}
@@ -397,48 +560,58 @@ export default function ContactPage() {
                   {/* Image Upload */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Attach a Photo <span className="text-gray-400">(optional)</span>
+                      Attach Photos <span className="text-gray-400">(optional)</span>
                     </label>
                     <p className="text-xs text-gray-500 mb-3">
-                      A photo helps us give you a more accurate estimate. JPEG, PNG, WebP or HEIC up to 10MB.
+                      Photos help us give you a more accurate estimate. Attach up to {MAX_IMAGE_COUNT} JPEG, PNG, WebP, or HEIC photos; large photos are resized before upload.
                     </p>
 
-                    {imagePreview ? (
-                      <div className="relative inline-block">
-                        <img
-                          src={imagePreview}
-                          alt="Upload preview"
-                          className="w-40 h-40 object-cover rounded-lg border border-gray-200"
-                        />
-                        <button
-                          type="button"
-                          onClick={removeImage}
-                          className="absolute -top-2 -right-2 w-7 h-7 bg-black text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
-                          aria-label="Remove image"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
+                    <label
+                      htmlFor="image"
+                      className="flex flex-col items-center justify-center w-full h-36 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#C9A327] hover:bg-[#fdfbf0] transition-all"
+                    >
+                      <svg className="w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-sm text-gray-500">
+                        {images.length > 0 ? "Click to add more photos" : "Click to upload photos"}
+                      </span>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        id="image"
+                        accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+                        multiple
+                        className="hidden"
+                        onChange={handleImageChange}
+                      />
+                    </label>
+
+                    {imagePreviews.length > 0 && (
+                      <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {imagePreviews.map((imagePreview, index) => (
+                          <div key={`${images[index]?.name ?? "photo"}-${index}`} className="relative">
+                            <img
+                              src={imagePreview}
+                              alt={`Upload preview ${index + 1}`}
+                              className="w-full aspect-square object-cover rounded-lg border border-gray-200"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeImage(index)}
+                              className="absolute -top-2 -right-2 w-7 h-7 bg-black text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+                              aria-label={`Remove photo ${index + 1}`}
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                            <p className="mt-1 text-xs text-gray-500 truncate">
+                              {images[index]?.name ?? `Photo ${index + 1}`}
+                            </p>
+                          </div>
+                        ))}
                       </div>
-                    ) : (
-                      <label
-                        htmlFor="image"
-                        className="flex flex-col items-center justify-center w-full h-36 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#C9A327] hover:bg-[#fdfbf0] transition-all"
-                      >
-                        <svg className="w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <span className="text-sm text-gray-500">Click to upload a photo</span>
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          id="image"
-                          accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
-                          className="hidden"
-                          onChange={handleImageChange}
-                        />
-                      </label>
                     )}
                   </div>
 
@@ -495,7 +668,7 @@ export default function ContactPage() {
           </div>
           
           <p className="text-center text-gray-500 max-w-2xl mx-auto">
-            Not sure if we serve your area? Give us a call — we'll let you know. We're happy to discuss projects throughout North Georgia.
+            Not sure if we serve your area? Give us a call — we&apos;ll let you know. We&apos;re happy to discuss projects throughout North Georgia.
           </p>
         </div>
       </section>

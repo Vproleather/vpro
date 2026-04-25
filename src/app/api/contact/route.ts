@@ -6,6 +6,17 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const OWNER_EMAIL = "vpro@bellsouth.net";
 const FROM_CONTACT = "contact@vprousa.com";
 const FROM_NOREPLY = "noreply@vprousa.com";
+const MAX_TOTAL_IMAGE_UPLOAD_BYTES = 4 * 1024 * 1024;
+const MAX_REQUEST_BYTES = Math.floor(4.25 * 1024 * 1024);
+const MAX_IMAGE_COUNT = 5;
+const IMAGE_UPLOAD_LIMIT_LABEL = "4MB";
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/heic",
+  "image/heif",
+];
 
 // Service label mapping
 const serviceLabels: Record<string, string> = {
@@ -46,9 +57,10 @@ function buildOwnerEmailHtml(data: {
   phone: string;
   service: string;
   message: string;
-  hasImage: boolean;
+  imageCount: number;
 }) {
   const serviceLabel = serviceLabels[data.service] || data.service;
+  const hasImages = data.imageCount > 0;
   return `
 <!DOCTYPE html>
 <html>
@@ -112,9 +124,9 @@ function buildOwnerEmailHtml(data: {
                 <p style="margin:0;color:#333;font-size:14px;line-height:1.6;white-space:pre-wrap;">${data.message}</p>
               </div>
 
-              ${data.hasImage ? `
+              ${hasImages ? `
               <div style="margin-top:16px;padding:12px 16px;background-color:#fffbeb;border-radius:8px;border:1px solid #C9A327;">
-                <p style="margin:0;color:#92751b;font-size:14px;">📎 <strong>Image attached</strong> — see attachment below.</p>
+                <p style="margin:0;color:#92751b;font-size:14px;"><strong>${data.imageCount} photo${data.imageCount === 1 ? "" : "s"} attached</strong> — see attachment${data.imageCount === 1 ? "" : "s"} below.</p>
               </div>
               ` : ""}
             </td>
@@ -213,13 +225,23 @@ function buildCustomerConfirmationHtml(name: string, serviceValue: string) {
 export async function POST(request: NextRequest) {
   try {
     const contentType = request.headers.get("content-type") || "";
+    const contentLength = Number(request.headers.get("content-length") || 0);
+
+    if (contentLength > MAX_REQUEST_BYTES) {
+      return NextResponse.json(
+        {
+          error: `Photo uploads must be under ${IMAGE_UPLOAD_LIMIT_LABEL}. Please choose a smaller image.`,
+        },
+        { status: 413 }
+      );
+    }
 
     let name: string;
     let email: string;
     let phone: string;
     let service: string;
     let message: string;
-    let imageAttachment: { filename: string; content: Buffer } | null = null;
+    const imageAttachments: { filename: string; content: Buffer }[] = [];
 
     if (contentType.includes("multipart/form-data")) {
       const formData = await request.formData();
@@ -229,24 +251,33 @@ export async function POST(request: NextRequest) {
       service = formData.get("service") as string;
       message = formData.get("message") as string;
 
-      const file = formData.get("image") as File | null;
-      if (file && file.size > 0) {
-        // 10MB limit
-        if (file.size > 10 * 1024 * 1024) {
-          return NextResponse.json(
-            { error: "Image must be under 10MB" },
-            { status: 400 }
-          );
-        }
+      const files = formData
+        .getAll("images")
+        .filter((value): value is File => value instanceof File && value.size > 0);
+      const legacyFile = formData.get("image");
+      if (legacyFile instanceof File && legacyFile.size > 0) {
+        files.push(legacyFile);
+      }
 
-        const allowedTypes = [
-          "image/jpeg",
-          "image/png",
-          "image/webp",
-          "image/heic",
-          "image/heif",
-        ];
-        if (!allowedTypes.includes(file.type)) {
+      if (files.length > MAX_IMAGE_COUNT) {
+        return NextResponse.json(
+          { error: `You can attach up to ${MAX_IMAGE_COUNT} photos` },
+          { status: 400 }
+        );
+      }
+
+      const totalImageBytes = files.reduce((total, file) => total + file.size, 0);
+      if (totalImageBytes > MAX_TOTAL_IMAGE_UPLOAD_BYTES) {
+        return NextResponse.json(
+          {
+            error: `Photo uploads must be under ${IMAGE_UPLOAD_LIMIT_LABEL} total`,
+          },
+          { status: 413 }
+        );
+      }
+
+      for (const file of files) {
+        if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
           return NextResponse.json(
             { error: "Only JPEG, PNG, WebP, and HEIC images are accepted" },
             { status: 400 }
@@ -254,10 +285,10 @@ export async function POST(request: NextRequest) {
         }
 
         const arrayBuffer = await file.arrayBuffer();
-        imageAttachment = {
+        imageAttachments.push({
           filename: file.name,
           content: Buffer.from(arrayBuffer),
-        };
+        });
       }
     } else {
       const body = await request.json();
@@ -279,13 +310,11 @@ export async function POST(request: NextRequest) {
     const serviceLabel = serviceLabels[service] || service;
 
     // Build attachments array for owner email
-    const attachments = imageAttachment
-      ? [
-          {
-            filename: imageAttachment.filename,
-            content: imageAttachment.content,
-          },
-        ]
+    const attachments = imageAttachments.length > 0
+      ? imageAttachments.map((imageAttachment) => ({
+          filename: imageAttachment.filename,
+          content: imageAttachment.content,
+        }))
       : undefined;
 
     // Send notification email to owner
@@ -300,7 +329,7 @@ export async function POST(request: NextRequest) {
         phone,
         service,
         message,
-        hasImage: !!imageAttachment,
+        imageCount: imageAttachments.length,
       }),
       attachments,
     });
@@ -321,4 +350,11 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  return NextResponse.json(
+    { error: "Method not allowed" },
+    { status: 405, headers: { Allow: "POST" } }
+  );
 }
