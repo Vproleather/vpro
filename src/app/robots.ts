@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const baseUrl = new URL("https://vproleather.com");
+const baseUrl = new URL("https://www.vprousa.com");
 
 export default function robots(): MetadataRoute.Robots {
   return {

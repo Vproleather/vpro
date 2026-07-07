@@ -4,11 +4,11 @@
 export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://vproleather.com/#localbusiness",
+  "@id": "https://www.vprousa.com/#localbusiness",
   "name": "V-Pro Leather Repair",
   "alternateName": "VPro Leather",
   "description": "Professional leather repair, furniture restoration, and upholstery services in Woodstock, GA. Serving Cherokee County and North Atlanta since 2005.",
-  "url": "https://vproleather.com",
+  "url": "https://www.vprousa.com",
   "telephone": "(770) 592-4689",
   "email": "vpro@bellsouth.net",
   "address": {
@@ -39,7 +39,7 @@ export const localBusinessSchema = {
     }
   ],
   "priceRange": "$$",
-  "image": "https://vproleather.com/V-pro.png",
+  "image": "https://www.vprousa.com/V-pro.png",
   "founder": {
     "@type": "Person",
     "name": "Brad Koplen"
@@ -77,7 +77,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Leather Sofa Repair",
               "description": "Professional leather sofa and couch repair including tears, scratches, fading, and wear damage restoration.",
-              "url": "https://vproleather.com/leather-repair/leather-sofa-repair"
+              "url": "https://www.vprousa.com/leather-repair/leather-sofa-repair"
             }
           },
           {
@@ -86,7 +86,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Leather Car Seat Repair",
               "description": "Auto leather repair for all makes and models. Fix cracks, tears, fading, and wear on vehicle interiors.",
-              "url": "https://vproleather.com/leather-repair/leather-car-seat-repair"
+              "url": "https://www.vprousa.com/leather-repair/leather-car-seat-repair"
             }
           },
           {
@@ -95,7 +95,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Leather Furniture Restoration",
               "description": "Complete restoration services for all types of leather furniture including sofas, chairs, and recliners.",
-              "url": "https://vproleather.com/leather-repair/leather-furniture-restoration"
+              "url": "https://www.vprousa.com/leather-repair/leather-furniture-restoration"
             }
           },
           {
@@ -104,7 +104,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Leather Color Restoration",
               "description": "Restore faded, worn leather to its original vibrant color using professional-grade dyes.",
-              "url": "https://vproleather.com/leather-repair/leather-color-restoration"
+              "url": "https://www.vprousa.com/leather-repair/leather-color-restoration"
             }
           },
           {
@@ -113,7 +113,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Leather Cleaning",
               "description": "Deep cleaning services that remove dirt and oils while protecting and conditioning the leather.",
-              "url": "https://vproleather.com/leather-repair/leather-cleaning"
+              "url": "https://www.vprousa.com/leather-repair/leather-cleaning"
             }
           },
           {
@@ -122,7 +122,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Leather Recoloring",
               "description": "Change the color of your leather furniture or vehicle interior to a completely new color.",
-              "url": "https://vproleather.com/leather-repair/leather-recoloring"
+              "url": "https://www.vprousa.com/leather-repair/leather-recoloring"
             }
           },
           {
@@ -131,7 +131,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Leather Scratch Repair",
               "description": "Remove scratches from pets, keys, or everyday wear on leather furniture and car interiors.",
-              "url": "https://vproleather.com/leather-repair/leather-scratch-repair"
+              "url": "https://www.vprousa.com/leather-repair/leather-scratch-repair"
             }
           },
           {
@@ -140,7 +140,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Leather Tear Repair",
               "description": "Professional tear and rip repair that restores leather to like-new condition.",
-              "url": "https://vproleather.com/leather-repair/leather-tear-repair"
+              "url": "https://www.vprousa.com/leather-repair/leather-tear-repair"
             }
           },
           {
@@ -149,7 +149,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Leather Dyeing",
               "description": "Professional leather dyeing with color-matched or custom color results.",
-              "url": "https://vproleather.com/leather-repair/leather-dyeing"
+              "url": "https://www.vprousa.com/leather-repair/leather-dyeing"
             }
           },
           {
@@ -158,7 +158,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Commercial Leather Furniture Repair",
               "description": "High-volume repair services for offices, hotels, restaurants, and businesses.",
-              "url": "https://vproleather.com/leather-repair/commercial-leather-furniture-repair"
+              "url": "https://www.vprousa.com/leather-repair/commercial-leather-furniture-repair"
             }
           },
           {
@@ -167,7 +167,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Aircraft Seat Repair",
               "description": "Specialized leather repair for private aircraft and aviation interiors.",
-              "url": "https://vproleather.com/leather-repair/aircraft-seat-repair"
+              "url": "https://www.vprousa.com/leather-repair/aircraft-seat-repair"
             }
           },
           {
@@ -176,7 +176,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Marine Seat Repair",
               "description": "Boat and marine leather repair built to withstand sun, water, and harsh conditions.",
-              "url": "https://vproleather.com/leather-repair/marine-seat-repair"
+              "url": "https://www.vprousa.com/leather-repair/marine-seat-repair"
             }
           }
         ]
@@ -191,7 +191,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Furniture Regluing",
               "description": "Fix wobbly, loose furniture joints with proper regluing techniques and modern adhesives.",
-              "url": "https://vproleather.com/furniture-repair/furniture-regluing"
+              "url": "https://www.vprousa.com/furniture-repair/furniture-regluing"
             }
           },
           {
@@ -200,7 +200,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Dining Chair Repair",
               "description": "Restore dining chairs to sturdy, reliable condition including regluing, refinishing, and reupholstery.",
-              "url": "https://vproleather.com/furniture-repair/dining-chair-repair"
+              "url": "https://www.vprousa.com/furniture-repair/dining-chair-repair"
             }
           },
           {
@@ -209,7 +209,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Recliner Repair",
               "description": "Fix broken mechanisms, worn padding, and structural issues on all recliner brands.",
-              "url": "https://vproleather.com/furniture-repair/recliner-repair"
+              "url": "https://www.vprousa.com/furniture-repair/recliner-repair"
             }
           },
           {
@@ -218,7 +218,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Kitchen Chair Repair",
               "description": "Keep your kitchen seating safe, sturdy, and looking great.",
-              "url": "https://vproleather.com/furniture-repair/kitchen-chair-repair"
+              "url": "https://www.vprousa.com/furniture-repair/kitchen-chair-repair"
             }
           },
           {
@@ -227,7 +227,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Vintage Furniture Restoration",
               "description": "Preserve and restore antique and heirloom pieces with appropriate period techniques.",
-              "url": "https://vproleather.com/furniture-repair/vintage-furniture-restoration"
+              "url": "https://www.vprousa.com/furniture-repair/vintage-furniture-restoration"
             }
           },
           {
@@ -236,7 +236,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Water Damaged Furniture Repair",
               "description": "Restore furniture affected by floods, leaks, or spills with professional drying and repair.",
-              "url": "https://vproleather.com/furniture-repair/water-damaged-furniture-repair"
+              "url": "https://www.vprousa.com/furniture-repair/water-damaged-furniture-repair"
             }
           },
           {
@@ -245,7 +245,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Fire Damaged Furniture Repair",
               "description": "Salvage and restore furniture after fire or smoke damage.",
-              "url": "https://vproleather.com/furniture-repair/fire-damaged-furniture-repair"
+              "url": "https://www.vprousa.com/furniture-repair/fire-damaged-furniture-repair"
             }
           },
           {
@@ -254,7 +254,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Moving Damage Furniture Repair",
               "description": "Fix scratches, dents, and breaks from moving accidents.",
-              "url": "https://vproleather.com/furniture-repair/moving-damage-furniture-repair"
+              "url": "https://www.vprousa.com/furniture-repair/moving-damage-furniture-repair"
             }
           }
         ]
@@ -269,7 +269,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Commercial Upholstery",
               "description": "High-volume upholstery solutions for businesses including maintenance programs.",
-              "url": "https://vproleather.com/upholstery/commercial-upholstery"
+              "url": "https://www.vprousa.com/upholstery/commercial-upholstery"
             }
           },
           {
@@ -278,7 +278,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Restaurant Seat Upholstery",
               "description": "Keep restaurant booths and chairs looking fresh with commercial-grade fabrics.",
-              "url": "https://vproleather.com/upholstery/restaurant-seat-upholstery"
+              "url": "https://www.vprousa.com/upholstery/restaurant-seat-upholstery"
             }
           },
           {
@@ -287,7 +287,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Hospitality Upholstery",
               "description": "Hotels, resorts, and event venues upholstery throughout North Atlanta.",
-              "url": "https://vproleather.com/upholstery/hospitality-upholstery"
+              "url": "https://www.vprousa.com/upholstery/hospitality-upholstery"
             }
           },
           {
@@ -296,7 +296,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Health Club Upholstery",
               "description": "Gym equipment padding and seating that withstands heavy use.",
-              "url": "https://vproleather.com/upholstery/health-club-upholstery"
+              "url": "https://www.vprousa.com/upholstery/health-club-upholstery"
             }
           },
           {
@@ -305,7 +305,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Medical Seat Upholstery",
               "description": "Healthcare-grade materials that meet sanitation and infection control standards.",
-              "url": "https://vproleather.com/upholstery/medical-seat-upholstery"
+              "url": "https://www.vprousa.com/upholstery/medical-seat-upholstery"
             }
           },
           {
@@ -314,7 +314,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Dining Chair Upholstery",
               "description": "Reupholster your dining set with new fabric for a fresh new look.",
-              "url": "https://vproleather.com/upholstery/dining-chair-upholstery"
+              "url": "https://www.vprousa.com/upholstery/dining-chair-upholstery"
             }
           },
           {
@@ -323,7 +323,7 @@ export const localBusinessSchema = {
               "@type": "Service",
               "name": "Marine Upholstery",
               "description": "Boat seats and marine interiors built for Lake Allatoona conditions.",
-              "url": "https://vproleather.com/upholstery/marine-upholstery"
+              "url": "https://www.vprousa.com/upholstery/marine-upholstery"
             }
           }
         ]
@@ -424,10 +424,10 @@ export const faqSchema = {
 export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://vproleather.com/#organization",
+  "@id": "https://www.vprousa.com/#organization",
   "name": "V-Pro Leather Repair",
-  "url": "https://vproleather.com",
-  "logo": "https://vproleather.com/V-pro.png",
+  "url": "https://www.vprousa.com",
+  "logo": "https://www.vprousa.com/V-pro.png",
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "(770) 592-4689",
@@ -500,7 +500,7 @@ export function generateServiceSchema(
     "url": serviceUrl,
     "provider": {
       "@type": "LocalBusiness",
-      "@id": "https://vproleather.com/#localbusiness"
+      "@id": "https://www.vprousa.com/#localbusiness"
     },
     "serviceType": parentCategory,
     "areaServed": {

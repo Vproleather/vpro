@@ -16,8 +16,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://www.vprousa.com";
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://vproleather.com'),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Premier Leather Repair Woodstock GA | V-Pro Leather",
     template: "%s | V-Pro Leather Repair"
@@ -44,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://vproleather.com',
+    url: siteUrl,
     siteName: 'V-Pro Leather Repair',
     title: 'Premier Leather Repair Woodstock GA | V-Pro Leather',
     description: 'Professional leather repair, upholstery, and furniture restoration services in Woodstock, GA. Serving Cherokee County with expert craftsmanship since 2005.',
