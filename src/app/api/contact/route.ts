@@ -10,6 +10,10 @@ const MAX_TOTAL_IMAGE_UPLOAD_BYTES = 4 * 1024 * 1024;
 const MAX_REQUEST_BYTES = Math.floor(4.25 * 1024 * 1024);
 const MAX_IMAGE_COUNT = 5;
 const IMAGE_UPLOAD_LIMIT_LABEL = "4MB";
+const TURNSTILE_ACTION = "contact-form";
+const TURNSTILE_VERIFY_URL =
+  "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+const TURNSTILE_TEST_SECRET_KEY = "1x0000000000000000000000000000000AA";
 const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
   "image/png",
@@ -17,6 +21,57 @@ const ALLOWED_IMAGE_TYPES = [
   "image/heic",
   "image/heif",
 ];
+
+type TurnstileVerification = {
+  success: boolean;
+  hostname?: string;
+  action?: string;
+  "error-codes"?: string[];
+};
+
+async function verifyTurnstileToken(
+  token: string,
+  remoteIp: string | null
+): Promise<TurnstileVerification> {
+  const secretKey =
+    process.env.TURNSTILE_SECRET_KEY ||
+    (process.env.NODE_ENV !== "production" ? TURNSTILE_TEST_SECRET_KEY : "");
+
+  if (!secretKey) {
+    throw new Error("TURNSTILE_SECRET_KEY is not configured");
+  }
+
+  const verificationBody = new URLSearchParams({
+    secret: secretKey,
+    response: token,
+  });
+
+  if (remoteIp) {
+    verificationBody.set("remoteip", remoteIp);
+  }
+
+  const response = await fetch(TURNSTILE_VERIFY_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: verificationBody,
+    cache: "no-store",
+    signal: AbortSignal.timeout(5000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Turnstile Siteverify returned ${response.status}`);
+  }
+
+  return (await response.json()) as TurnstileVerification;
+}
+
+function getRequestIp(request: NextRequest) {
+  return (
+    request.headers.get("cf-connecting-ip") ||
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    null
+  );
+}
 
 // Service label mapping
 const serviceLabels: Record<string, string> = {
@@ -241,6 +296,8 @@ export async function POST(request: NextRequest) {
     let phone: string;
     let service: string;
     let message: string;
+    let turnstileToken: string;
+    let files: File[] = [];
     const imageAttachments: { filename: string; content: Buffer }[] = [];
 
     if (contentType.includes("multipart/form-data")) {
@@ -250,8 +307,9 @@ export async function POST(request: NextRequest) {
       phone = formData.get("phone") as string;
       service = formData.get("service") as string;
       message = formData.get("message") as string;
+      turnstileToken = formData.get("cf-turnstile-response") as string;
 
-      const files = formData
+      files = formData
         .getAll("images")
         .filter((value): value is File => value instanceof File && value.size > 0);
       const legacyFile = formData.get("image");
@@ -283,12 +341,6 @@ export async function POST(request: NextRequest) {
             { status: 400 }
           );
         }
-
-        const arrayBuffer = await file.arrayBuffer();
-        imageAttachments.push({
-          filename: file.name,
-          content: Buffer.from(arrayBuffer),
-        });
       }
     } else {
       const body = await request.json();
@@ -297,6 +349,7 @@ export async function POST(request: NextRequest) {
       phone = body.phone;
       service = body.service;
       message = body.message;
+      turnstileToken = body["cf-turnstile-response"] || body.turnstileToken;
     }
 
     // Validate required fields
@@ -305,6 +358,57 @@ export async function POST(request: NextRequest) {
         { error: "All fields are required" },
         { status: 400 }
       );
+    }
+
+    if (
+      !turnstileToken ||
+      typeof turnstileToken !== "string" ||
+      turnstileToken.length > 2048
+    ) {
+      return NextResponse.json(
+        { error: "Please complete the verification and try again." },
+        { status: 400 }
+      );
+    }
+
+    let turnstileVerification: TurnstileVerification;
+    try {
+      turnstileVerification = await verifyTurnstileToken(
+        turnstileToken,
+        getRequestIp(request)
+      );
+    } catch (error) {
+      console.error("Turnstile verification error:", error);
+      return NextResponse.json(
+        { error: "Verification is temporarily unavailable. Please try again." },
+        { status: 503 }
+      );
+    }
+
+    const requestHostname = request.nextUrl.hostname.toLowerCase();
+    const verifiedHostname = turnstileVerification.hostname?.toLowerCase();
+    if (
+      !turnstileVerification.success ||
+      turnstileVerification.action !== TURNSTILE_ACTION ||
+      verifiedHostname !== requestHostname
+    ) {
+      console.warn("Turnstile verification rejected", {
+        action: turnstileVerification.action,
+        errorCodes: turnstileVerification["error-codes"],
+        hostname: turnstileVerification.hostname,
+      });
+      return NextResponse.json(
+        { error: "Verification failed or expired. Please try again." },
+        { status: 400 }
+      );
+    }
+
+    for (const file of files) {
+      const arrayBuffer = await file.arrayBuffer();
+      imageAttachments.push({
+        filename: file.name,
+        content: Buffer.from(arrayBuffer),
+      });
     }
 
     const serviceLabel = serviceLabels[service] || service;

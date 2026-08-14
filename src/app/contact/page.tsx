@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Turnstile from "@/components/Turnstile";
 
 const serviceAreas = [
   "Woodstock", "Canton", "Roswell", "Alpharetta", "Marietta", 
@@ -21,6 +22,10 @@ const ALLOWED_IMAGE_TYPES = [
   "image/heic",
   "image/heif",
 ];
+const TURNSTILE_ACTION = "contact-form";
+const TURNSTILE_SITE_KEY =
+  process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
+  (process.env.NODE_ENV !== "production" ? "1x00000000000000000000AA" : "");
 
 function getCompressedFileName(fileName: string) {
   const baseName = fileName.replace(/\.[^/.]+$/, "") || "photo";
@@ -129,6 +134,8 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -217,6 +224,12 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!turnstileToken) {
+      setErrorMessage("Please complete the verification before submitting.");
+      return;
+    }
+
     setIsSubmitting(true);
     setErrorMessage("");
 
@@ -227,6 +240,7 @@ export default function ContactPage() {
       body.append("phone", formData.phone);
       body.append("service", formData.service);
       body.append("message", formData.message);
+      body.append("cf-turnstile-response", turnstileToken);
       images.forEach((image) => body.append("images", image));
 
       const res = await fetch("/api/contact", { method: "POST", body });
@@ -236,11 +250,14 @@ export default function ContactPage() {
         throw new Error(data.error || "Something went wrong.");
       }
 
+      setTurnstileToken("");
       setIsSubmitted(true);
       setFormData({ name: "", email: "", phone: "", service: "", message: "" });
       removeImages();
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : "Failed to send. Please try again.");
+      setTurnstileToken("");
+      setTurnstileResetSignal((currentSignal) => currentSignal + 1);
     } finally {
       setIsSubmitting(false);
     }
@@ -615,6 +632,13 @@ export default function ContactPage() {
                     )}
                   </div>
 
+                  <Turnstile
+                    action={TURNSTILE_ACTION}
+                    siteKey={TURNSTILE_SITE_KEY}
+                    onTokenChange={setTurnstileToken}
+                    resetSignal={turnstileResetSignal}
+                  />
+
                   {/* Error message */}
                   {errorMessage && (
                     <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -624,7 +648,7 @@ export default function ContactPage() {
                   
                   <button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !turnstileToken}
                     className="w-full px-8 py-4 bg-[#C9A327] text-black font-semibold rounded-full hover:bg-[#d4af37] transition-all text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? "Sending..." : "Request Service"}
