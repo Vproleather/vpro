@@ -10,34 +10,44 @@ export const metadata: Metadata = {
 
 const locationPages = [
   {
+    name: "Woofstock Park",
+    href: "/locations/woofstock-park",
+    desc: "Leather, vinyl, furniture, and car-seat repair near Dupree Road, Towne Lake Parkway, and Woofstock Park in Woodstock.",
+  },
+  {
+    name: "Noonday Creek Park",
+    href: "/locations/noonday-creek-park",
+    desc: "Mobile and scheduled leather repair near Hawkins Store Road, Noonday Creek Park, and the Bells Ferry corridor.",
+  },
+  {
+    name: "Baker Elementary School",
+    href: "/locations/baker-elementary-school",
+    desc: "Leather and vinyl repair near Baker Elementary School, Baker Road, and the surrounding Acworth area.",
+  },
+  {
+    name: "Town Center at Cobb",
+    href: "/locations/town-center-at-cobb",
+    desc: "Residential, automotive, and commercial leather repair around Town Center at Cobb and Barrett Parkway.",
+  },
+  {
+    name: "Kennesaw State University",
+    href: "/locations/kennesaw-state-university",
+    desc: "Leather and vinyl repair near the Kennesaw campus, Chastain Road, Frey Road, and Town Point Drive.",
+  },
+  {
     name: "Holly Springs Town Center",
     href: "/locations/holly-springs-town-center",
     desc: "Leather repair near Holly Springs Town Center, Bradshaw Farm, and the Lake Allatoona corridor.",
-    rank: "Nearest target — 10 minutes from our shop",
   },
   {
     name: "Kennesaw Mountain",
     href: "/locations/kennesaw-mountain",
     desc: "Leather restoration near Kennesaw Mountain National Battlefield Park and surrounding neighborhoods.",
-    rank: "Iconic landmark with high search volume",
   },
   {
     name: "Gibbs Gardens, Ball Ground",
     href: "/locations/gibbs-gardens",
     desc: "Leather repair near Gibbs Gardens and the Etowah River corridor in Ball Ground, GA.",
-    rank: "No local competition in a growing area",
-  },
-  {
-    name: "Town Center at Cobb",
-    href: "/locations/town-center-at-cobb",
-    desc: "Commercial and residential leather repair along the Barrett Parkway corridor near Town Center Mall.",
-    rank: "Highest commercial density in Cobb County",
-  },
-  {
-    name: "Kennesaw State University",
-    href: "/locations/kennesaw-state-university",
-    desc: "Affordable leather and vinyl repair for students, faculty, and campus-area businesses near KSU.",
-    rank: "43,000+ students and high foot traffic",
   },
 ];
 

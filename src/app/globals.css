@@ -76,3 +76,98 @@ img {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-dark);
 }
+
+/* Location article rhythm */
+.location-rich-text h2 {
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  color: #0a0a0a;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.location-rich-text h2::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 3rem;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--accent);
+  content: "";
+}
+
+.location-rich-text h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #171717;
+  font-size: 1.25rem;
+}
+
+.location-rich-text p {
+  margin-bottom: 1.25rem;
+  color: #525252;
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+
+.location-rich-text p:last-child {
+  margin-bottom: 0;
+}
+
+.location-rich-text a {
+  color: #8b6e12;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgb(201 163 39 / 40%);
+  text-underline-offset: 4px;
+}
+
+.location-rich-text a:hover {
+  color: #0a0a0a;
+}
+
+.location-rich-text ul {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.location-rich-text li {
+  position: relative;
+}
+
+.location-rich-text ul > li {
+  min-height: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 1px solid #eeeeea;
+  border-radius: 1rem;
+  background: #fafaf8;
+  color: #525252;
+  line-height: 1.65;
+}
+
+.location-rich-text ul > li::before {
+  position: absolute;
+  top: 1.15rem;
+  left: 1rem;
+  display: flex;
+  width: 1.35rem;
+  height: 1.35rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgb(201 163 39 / 16%);
+  color: #8b6e12;
+  content: "✓";
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .location-rich-text ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
